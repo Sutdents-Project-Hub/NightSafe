@@ -1,0 +1,61 @@
+export const scenarios = [
+  {
+    id: 'study',
+    icon: 'BookOpen',
+    title: '晚自習返家',
+    description: '補習班、晚自習結束，安心回家',
+    gradient: 'linear-gradient(135deg, #22C55E20, #06B6D420)',
+    defaultPrefs: ['bright-route', 'less-walking'],
+  },
+  {
+    id: 'event',
+    icon: 'Music',
+    title: '活動散場',
+    description: '演唱會、展演、球賽散場後的移動',
+    gradient: 'linear-gradient(135deg, #A855F720, #3B82F620)',
+    defaultPrefs: ['crowded-route', 'clear-transfer'],
+  },
+  {
+    id: 'work',
+    icon: 'Briefcase',
+    title: '夜班下班',
+    description: '加班、打工、夜班後返家',
+    gradient: 'linear-gradient(135deg, #F59E0B20, #F43F5E20)',
+    defaultPrefs: ['fastest', 'less-walking'],
+  },
+  {
+    id: 'tourist',
+    icon: 'MapPin',
+    title: '旅客夜間返程',
+    description: '不熟悉地區、夜市後回飯店',
+    gradient: 'linear-gradient(135deg, #06B6D420, #22C55E20)',
+    defaultPrefs: ['simple-route', 'bright-route'],
+  },
+  {
+    id: 'unfamiliar',
+    icon: 'Compass',
+    title: '陌生地區移動',
+    description: '在不熟悉的區域夜間移動',
+    gradient: 'linear-gradient(135deg, #3B82F620, #A855F720)',
+    defaultPrefs: ['main-road', 'bright-route'],
+  },
+  {
+    id: 'budget',
+    icon: 'Wallet',
+    title: '低預算模式',
+    description: '花最少錢、善用公共交通',
+    gradient: 'linear-gradient(135deg, #22C55E20, #F59E0B20)',
+    defaultPrefs: ['cheapest', 'public-transit'],
+  },
+];
+
+export const preferenceOptions = [
+  { id: 'bright-route', label: '路燈多', icon: 'Lightbulb' },
+  { id: 'less-walking', label: '少走路', icon: 'Footprints' },
+  { id: 'main-road', label: '走大路', icon: 'Route' },
+  { id: 'fastest', label: '最快到達', icon: 'Zap' },
+  { id: 'cheapest', label: '最省錢', icon: 'Wallet' },
+  { id: 'less-transfer', label: '少轉乘', icon: 'ArrowRightLeft' },
+  { id: 'crowded-route', label: '人多的路', icon: 'Users' },
+  { id: 'public-transit', label: '大眾運輸', icon: 'Bus' },
+];
