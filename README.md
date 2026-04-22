@@ -1,60 +1,110 @@
 # NightSafe
 
-點亮你每一步的夜歸路，讓數據成為你最可靠的保鑣。一個結合開放資料與 AI 評估的個人專屬夜間移動分析平台。
-
 ## 專案簡介
 
-NightSafe 是一個專為解決夜間移動安全痛點所設計的分析平台。有別於傳統導航工具僅提供最快路徑，NightSafe 將台北市等多項官方開放資料（包含警局、監視器分佈、醫療機構、夜間照明與 YouBike 租借站數量等）與使用者的個人偏好結合，透過演算法引擎為您推薦「最友善」、「最快速」或「最低成本」的夜間路徑。
+NightSafe 是一個夜間移動安全分析平台，結合地圖路徑規劃、官方開放資料與 AI 說明層，協助使用者在臺北市與新北市情境下評估夜間移動風險，並比較不同移動方案的安全性、時間與成本。
 
-此外，平台整合了側邊數據儀表板與逐段評估解析路段風險，有效消除對深夜未知的焦慮，陪伴使用者踏實走過每一段回家路。
+目前版本以 `NightSafe_web` 為主要可執行模組，提供前端介面、API 路由與路線評估邏輯。
 
-## 核心功能
+## 功能列表
 
-* 多維度路徑規劃：整合即時交通與開放資料，分析多種可能的路線，並提供成本與時間評估。
-* 安全熱點分佈分析：隨拖曳動態抓取地圖可視範圍內的治安與防護單位資料，減少不必要的伺服器負載。
-* 智能路段評分機制：圖層疊加計算後給予每層級安全評分，並以顏色視覺化路段風險（綠色為友善段、黃色為中性段、紅色為注意段）。
-* 即時資源動態：整合最新 YouBike 站點剩餘車輛數與空位，讓轉乘選項更可靠。
-* 直覺的互動介面：淺色清晰的高對比版面設計，搭配 CARTO 圖磚呈現優雅簡潔的使用者設計。
+- 依出發地、目的地、時間與偏好產生夜間路線規劃
+- 整合警局、監視器、醫療據點、YouBike 等安全相關資料
+- 以路段分數與說明文字呈現風險評估結果
+- 提供附近安全資源查詢與地圖圖層資料 API
+- 支援 AI 補充說明層，將路線結果轉為可讀性較高的摘要
 
 ## 技術架構
 
-* 框架：Next.js
-* 介面庫：React
-* 地圖引擎：Leaflet, React-Leaflet
-* 地圖圖磚：CARTO (Light mode tiles)
-* 測試：Node.js 原生 Test Runner
+- 前端框架：`Next.js 16`
+- UI：`React 19`
+- 地圖：`Leaflet`、`react-leaflet`
+- 伺服器端 API：`Next.js App Router Route Handlers`
+- 測試：`ESLint`、`Node.js Test Runner`
+- 容器化部署：`Dockerfile`（位於 `NightSafe_web/`）
 
-## 安裝與執行
+## 專案結構
 
-請確保您的電腦已安裝 Node.js (建議版本 18 以上)。
-
-1. 複製專案到本地端
-```bash
-git clone https://github.com/Felix-0901/NightSafe.git
-cd NightSafe
+```text
+.
+├── LICENSE
+├── README.md
+└── NightSafe_web
+    ├── Dockerfile
+    ├── package.json
+    ├── src
+    │   ├── app
+    │   ├── components
+    │   ├── data
+    │   └── lib
+    └── tests
 ```
 
-2. 進入前端專案資料夾並安裝依賴套件
+## 本地測試教學
+
+1. 安裝 Node.js `22` 或以上版本。
+2. 安裝依賴：
+
 ```bash
 cd NightSafe_web
-npm install
+npm ci
 ```
 
-3. 啟動開發伺服器
+3. 啟動開發環境：
+
 ```bash
 npm run dev
 ```
 
-4. 在瀏覽器中開啟專案
-請前往 http://localhost:3000 查看運作中的網站。
+4. 執行檢查：
 
-## 測試指令
-
-執行單元測試以確保地圖引擎與分析工具的正確性：
 ```bash
+npm run lint
 npm run test
 ```
 
-## 授權條款
+5. 若要驗證正式建置：
 
-詳見原始碼中的 LICENSE 檔案說明。
+```bash
+npm run build
+npm run start
+```
+
+預設開發網址為 `http://localhost:3000`。
+
+## 環境變數
+
+前端模組的環境變數範本位於 `NightSafe_web/.env.local.example`，可複製為 `NightSafe_web/.env.local` 後填入。
+
+| 變數名稱 | 用途 | 是否必要 |
+| --- | --- | --- |
+| `NIGHTSAFE_AI_API_KEY` | AI 說明層 API 金鑰 | 選填 |
+| `NIGHTSAFE_AI_BASE_URL` | AI API Base URL | 選填 |
+| `NIGHTSAFE_AI_MODEL` | AI 模型名稱 | 選填 |
+| `OPENAI_API_KEY` | 與既有整合相容的備援金鑰欄位 | 選填 |
+| `OPENAI_BASE_URL` | 與既有整合相容的備援 Base URL | 選填 |
+| `TDX_CLIENT_ID` | 未來交通資料整合保留欄位 | 選填 |
+| `TDX_CLIENT_SECRET` | 未來交通資料整合保留欄位 | 選填 |
+| `CWA_API_KEY` | 氣象署資料來源 API 金鑰 | 選填 |
+| `MOENV_API_KEY` | 環境部空氣品質資料 API 金鑰 | 選填 |
+
+未提供 `CWA_API_KEY`、`MOENV_API_KEY` 或 AI 相關金鑰時，系統會使用程式內建 fallback 值回應。
+
+## Coolify 部署教學
+
+目前專案已補上 `NightSafe_web/Dockerfile`，可作為 Coolify Docker 模式部署基礎。
+
+1. 在 Coolify 建立新專案並連接此 GitHub Repository。
+2. 類型選擇 `Dockerfile`。
+3. `Base Directory` 設定為 `NightSafe_web`。
+4. `Dockerfile Location` 設定為 `Dockerfile`。
+5. 於 Coolify 環境變數頁面補上 `NightSafe_web/.env.local.example` 中實際需要的變數。
+6. 對外埠使用容器內的 `3000`。
+7. 觸發部署，待健康檢查通過後即可對外提供服務。
+
+目前已驗證 `NightSafe_web` 可在本地通過 `npm run build`；但本機未啟動 Docker daemon，因此尚未完成本地 `docker build` 驗證。正式部署前，建議先在具備 Docker 環境的機器執行一次映像建置確認。
+
+## 前端 / 後端詳細文件連結
+
+- 前端：[`NightSafe_web/README.md`](./NightSafe_web/README.md)
+- 後端：目前無獨立後端目錄，API 與規劃邏輯已包含於 `NightSafe_web` 內
